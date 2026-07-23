@@ -1,0 +1,30 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/images"
+public_folder: "/images"
+
+collections:
+  # 馬プロフィール
+  - name: "horses"
+    label: "馬プロフィール"
+    folder: "content/horses"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "名前", name: "title", widget: "string" }
+      - { label: "プロフィール画像", name: "image", widget: "image", choose_url: false }
+      - { label: "紹介文", name: "body", widget: "markdown" }
+
+  # タイムライン投稿
+  - name: "posts"
+    label: "タイムライン投稿"
+    folder: "content/posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "タイトル", name: "title", widget: "string" }
+      - { label: "投稿画像", name: "image", widget: "image", choose_url: false }
+      - { label: "本文", name: "body", widget: "markdown" }
+      - { label: "公開日", name: "date", widget: "datetime" }
