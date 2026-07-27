@@ -1,5 +1,5 @@
 [build]
-  command = "npx eleventy"
+  command = "npm run build"
   publish = "public"
 
 [build.environment]
