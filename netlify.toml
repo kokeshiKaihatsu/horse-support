@@ -1,5 +1,5 @@
 [build]
-  command = "node_modules/.bin/eleventy"
+  command = "node -e \"require('./node_modules/@11ty/eleventy/cmd.js')\""
   publish = "public"
 
 [build.environment]
