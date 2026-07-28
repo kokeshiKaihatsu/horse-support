@@ -1,5 +1,5 @@
 [build]
-  command = "node -e \"require('./node_modules/@11ty/eleventy/cmd.js')\""
+  command = "npx @11ty/eleventy"
   publish = "public"
 
 [build.environment]
