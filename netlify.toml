@@ -1,6 +1,7 @@
 [build]
-  command = "npx @11ty/eleventy --input=. --output=public"
+  command = "npm run build"
   publish = "public"
+
 
 [build.environment]
   NODE_VERSION = "18"
