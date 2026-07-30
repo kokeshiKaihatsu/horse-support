@@ -19,14 +19,15 @@ module.exports = function(eleventyConfig) {
 
   // 4. 入力と出力のディレクトリ設定
   return {
-    dir: {
-      input: ".",          // ルート全体を入力として扱う
-      includes: "src/layouts",
-      data: "src/data",
-      output: "public"     // Netlify が公開するフォルダ
-    },
-    markdownTemplateEngine: "njk",
+   dir: {
+     input: "src",
+     includes: "_includes",
+     layouts: "_includes/layouts",
+     data: "data",
+     output: "public"
+   },
+   markdownTemplateEngine: "njk",
     htmlTemplateEngine: "njk",
-    templateFormats: ["html", "md", "njk"]
+   templateFormats: ["html", "md", "njk"]
   };
 };
