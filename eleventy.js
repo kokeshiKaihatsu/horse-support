@@ -19,9 +19,9 @@ module.exports = function(eleventyConfig) {
 
   // 4. 入力と出力のディレクトリ設定
   return {
-    dir: {
-      input: "src",          // src をルートにする
-      includes: "layouts",   // ★ _includes を使わず layouts を includes として扱う
+   dir: {
+      input: "src",
+      includes: "_includes",   // ← 元に戻す（Eleventy v3 の仕様に合わせる）
       data: "data",
       output: "public"
     },
