@@ -13,9 +13,10 @@ module.exports = function(eleventyConfig) {
   });
 
   // 3. レイアウト（base.html）を使えるようにする
-  eleventyConfig.addLayoutAlias("base", "src/layouts/base.html");
-  eleventyConfig.addLayoutAlias("horse", "src/layouts/horse.html");
-  eleventyConfig.addLayoutAlias("timeline", "src/layouts/timeline.html");
+  eleventyConfig.addLayoutAlias("base", "_includes/layouts/base.njk");
+  eleventyConfig.addLayoutAlias("horse", "_includes/layouts/horse.html");
+  eleventyConfig.addLayoutAlias("timeline", "_includes/layouts/timeline.html");
+
 
   // 4. 入力と出力のディレクトリ設定
   return {
