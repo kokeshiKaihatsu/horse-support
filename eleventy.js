@@ -20,10 +20,10 @@ module.exports = function(eleventyConfig) {
   // 4. 入力と出力のディレクトリ設定
   return {
     dir: {
-      input: "src",                // ★ src を入力にする
-      includes: "_includes",       // ★ 標準の _includes を使う
-      layouts: "_includes/layouts",// ★ レイアウトの場所を正しく指定
-      data: "data",                // 必要なら "src/data" にしてもOK
+      input: "src",          // src をルートにする
+      includes: "layouts",   // ★ _includes を使わず layouts を includes として扱う
+      layouts: "layouts",    // ★ layouts をレイアウトディレクトリにする
+      data: "data",
       output: "public"
     },
     markdownTemplateEngine: "njk",
