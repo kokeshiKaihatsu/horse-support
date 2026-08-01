@@ -22,7 +22,6 @@ module.exports = function(eleventyConfig) {
     dir: {
       input: "src",          // src をルートにする
       includes: "layouts",   // ★ _includes を使わず layouts を includes として扱う
-      layouts: "layouts",    // ★ layouts をレイアウトディレクトリにする
       data: "data",
       output: "public"
     },
