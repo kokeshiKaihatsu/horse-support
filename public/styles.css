@@ -37,7 +37,7 @@
 .hero-text {
   text-align: center;
   color: white;
-  background-color: rgba(0, 0, 0, 0.4);
+ /* background-color: rgba(0, 0, 0, 0.4); */
   padding: 2rem;
   border-radius: 10px;
 }
