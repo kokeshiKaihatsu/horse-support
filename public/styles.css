@@ -46,7 +46,7 @@
   position: relative; /* ← 擬似要素の上に文字を出すために必要 */
   text-align: center;
   color: white;
-  font-size: 4rem;
+  font-size: 3rem;
   padding: 2rem;
   border-radius: 10px;
 }
