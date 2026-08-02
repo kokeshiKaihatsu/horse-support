@@ -26,15 +26,17 @@
 
 .hero {
   position: relative;
-  height: 600px;
+  width: 100%;
+  height: auto;
   overflow: hidden;
 }
 
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.3); /* 背景を少し暗くする */
+.hero-img {
+  width: 100%;
+  height: auto;
+  object-fit: contain; /* ← 画像全体を見せる */
+  object-position: center;
+  display: block;
 }
 
 .hero-text {
@@ -42,6 +44,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: white;
   text-align: center;
+  color: white;
+  font-size: clamp(2rem, 6vw, 4rem);
 }
