@@ -27,20 +27,33 @@
 .hero {
   position: relative;
   width: 100%;
-  height: auto;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
-  aspect-ratio: 16 / 9; /* ← 横長比率を固定 */
 }
 
+/* 背景をぼかして引き延ばす */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url("/images/hime.jpg");
+  background-size: cover;
+  background-position: center;
+  filter: blur(20px) brightness(0.6); /* ← ぼかして暗くする */
+  transform: scale(1.2); /* ← 少し拡大して自然に */
+}
+
+/* メイン画像（縦長） */
 .hero-img {
-  width: 100%;
+  position: relative;
+  width: auto;
   height: 100%;
-  object-fit: contain; /* ← 画像全体を見せる */
-  object-position: center; /* ← 中央に配置 */
+  object-fit: contain;
   display: block;
-  background-color: #000; /* ← 余白が出たときに黒で埋める（任意） */
+  margin: 0 auto;
+  z-index: 1;
 }
 
+/* テキスト */
 .hero-text {
   position: absolute;
   top: 50%;
@@ -48,8 +61,10 @@
   transform: translate(-50%, -50%);
   text-align: center;
   color: white;
-  font-size: clamp(2rem, 5vw, 3rem);
+  font-size: clamp(2rem, 6vw, 4rem);
+  z-index: 2;
 }
+
 
 .hero-subtitle {
   white-space: normal; /* ← 自動改行を許可 */
