@@ -32,7 +32,7 @@
 }
 
 .hero-img {
-  width: 80%;          /* ← 一回り小さくする */
+  width: 100%;          /* ← 一回り小さくする */
   height: auto;
   object-fit: contain; /* ← 全体を見せる */
   object-position: center;
