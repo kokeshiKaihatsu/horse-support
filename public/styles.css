@@ -32,6 +32,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.3); /* 背景を少し暗くする */
 }
 
 .hero-text {
