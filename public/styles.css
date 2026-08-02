@@ -26,12 +26,10 @@
 
 .hero {
   background-image: url("/images/hime.jpg");
-  background-size: cover;
-  background-position: center;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background-size: contain;   /* ← 画像の比率を固定 */
+  background-repeat: no-repeat;
+  background-position: center top; /* ← 上固定にすると馬の顔がズレない */
+  height: 600px; /* ← 固定高さ（スマホでもPCでも同じ） */
   position: relative;
 }
 
@@ -43,10 +41,11 @@
 }
 
 .hero-text {
-  position: relative; /* ← 擬似要素の上に文字を出すために必要 */
+  position: absolute;
+  top: 50%;   /* 画面ではなく .hero の高さ基準 */
+  left: 50%;
+  transform: translate(-50%, -50%); /* 完全中央固定 */
   text-align: center;
   color: white;
   font-size: 3rem;
-  padding: 2rem;
-  border-radius: 10px;
 }
