@@ -23,3 +23,21 @@
   background: #f0f0f0;
   border-color: #aaa;
 }
+
+.hero {
+  background-image: url("/images/hime.jpg"); /* 背景画像 */
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-text {
+  text-align: center;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 2rem;
+  border-radius: 10px;
+}
