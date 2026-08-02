@@ -25,12 +25,9 @@
 }
 
 .hero {
-  background-image: url("/images/hime.jpg");
-  background-size: cover;        /* 画像の比率を維持しつつ拡大 */
-  background-position: center;   /* 常に中央を基準にする */
-  background-repeat: no-repeat;
-  height: 600px;                 /* 固定高さ（スマホでもPCでも同じ） */
   position: relative;
+  height: 600px;
+  overflow: hidden;
 }
 
 .hero::before {
@@ -42,10 +39,9 @@
 
 .hero-text {
   position: absolute;
-  top: 50%;                      /* hero の高さの中央 */
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  text-align: center;
   color: white;
-  font-size: 4rem;
+  text-align: center;
 }
