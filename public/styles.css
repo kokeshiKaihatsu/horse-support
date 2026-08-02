@@ -31,15 +31,14 @@
   overflow: hidden;
 }
 
-/* 背景をぼかして引き延ばす */
 .hero-bg {
   position: absolute;
   inset: 0;
   background-image: url("/images/hime.jpg");
-  background-size: cover;
-  background-position: center;
-  filter: blur(20px) brightness(0.6); /* ← ぼかして暗くする */
-  transform: scale(1.2); /* ← 少し拡大して自然に */
+  background-size: cover;        /* ← ぼかしをやめて引き伸ばす */
+  background-position: center;   /* ← 中央を基準に */
+  filter: brightness(0.7);       /* ← 少し暗くして文字を見やすく */
+  transform: none;               /* ← scaleを削除 */
 }
 
 /* メイン画像（縦長） */
