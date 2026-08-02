@@ -35,9 +35,10 @@
 .hero-img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* ← 横長でも切れすぎない */
-  object-position: center 40%; /* ← 馬の顔が中央より少し下に来るよう調整 */
+  object-fit: contain; /* ← 画像全体を見せる */
+  object-position: center; /* ← 中央に配置 */
   display: block;
+  background-color: #000; /* ← 余白が出たときに黒で埋める（任意） */
 }
 
 .hero-text {
