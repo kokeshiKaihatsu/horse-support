@@ -32,11 +32,12 @@
 }
 
 .hero-img {
-  width: 100%;
+  width: 80%;          /* ← 一回り小さくする */
   height: auto;
-  object-fit: contain; /* ← 画像全体を見せる */
+  object-fit: contain; /* ← 全体を見せる */
   object-position: center;
   display: block;
+  margin: 0 auto;      /* ← 中央寄せ */
 }
 
 .hero-text {
