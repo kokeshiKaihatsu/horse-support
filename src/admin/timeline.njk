@@ -1,0 +1,30 @@
+---
+layout: layouts/base.njk
+title: タイムライン投稿の追加
+permalink: "/admin/posts/index.html"
+---
+
+<h1>📝 タイムライン投稿の追加</h1>
+
+<form id="addPostForm">
+  <label>タイトル</label>
+  <input type="text" id="postTitle" required>
+
+  <label>馬ID</label>
+  <select id="postHorseId">
+    {% for horse in collections.horses %}
+      <option value="{{ horse.data.id }}">{{ horse.data.name }}</option>
+    {% endfor %}
+  </select>
+
+  <label>本文</label>
+  <textarea id="postBody"></textarea>
+
+  <label>画像</label>
+  <input type="file" id="postImages" accept="image/*" multiple>
+
+
+  <button type="submit">投稿する</button>
+</form>
+
+<script src="/scripts/admin.js"></script>

@@ -1,0 +1,25 @@
+---
+layout: layouts/base.njk
+title: 馬一覧
+---
+{% block styles %}
+<link rel="stylesheet" href="/styles/horses.css">
+{% endblock %}
+
+<h2>養老馬一覧</h2>
+
+<div class="horse-list">
+  {% for horse in collections.horses %}
+    <div class="horse-card">
+      <h3><a href="{{ horse.url }}">{{ horse.data.name }}</a></h3>
+      <img src="{{ horse.data.image }}" alt="{{ horse.data.name }}">
+      <div class="horse-info">
+        <p><strong>誕生日　：</strong> {{ horse.data.birthday }}</p>
+        <p><strong>年齢　　：</strong> {{ horse.data.birthday | calcAge }}</p>
+        <p><strong>特徴　　：</strong> {{ horse.data.description }}</p>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+

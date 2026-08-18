@@ -1,0 +1,25 @@
+---
+layout: layouts/base.njk
+title: 馬の追加
+permalink: "/admin/horses/index.html"
+---
+
+<h1>🐴 馬の追加</h1>
+
+<form id="addHorseForm">
+  <label>馬ID（英字）</label>
+  <input type="text" id="horseId" required>
+
+  <label>名前</label>
+  <input type="text" id="horseName" required>
+
+  <label>画像</label>
+  <input type="file" id="horseImage" accept="image/*">
+
+  <label>説明</label>
+  <textarea id="horseDesc"></textarea>
+
+  <button type="submit">追加する</button>
+</form>
+
+<script src="/scripts/admin.js"></script>

@@ -1,0 +1,19 @@
+@media (max-width: 600px) {
+  .timeline-img {
+    max-width: 90%;
+  }
+}
+
+.timeline-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.timeline-img {
+  max-width: 400px; /* 画像の最大幅 */
+  height: auto;     /* 縦横比を維持 */
+  border-radius: 8px; /* 角を少し丸く */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}

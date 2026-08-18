@@ -4,12 +4,30 @@
   <meta charset="UTF-8">
   <title>{{ title }}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- 共通CSS -->
   <link rel="stylesheet" href="/styles.css">
+
+  <!-- ページごとのCSSを読み込む -->
+  {% block styles %}{% endblock %}
 </head>
 <body>
 
-  <header>
-    <h1>こけし牧場</h1>
+  <header class="site-header">
+    <div class="logo">
+      <a href="/">こけし牧場</a>
+
+      {# 管理者リンク（今は常に表示） #}
+      <a href="/admin/" class="admin-link">管理</a>
+    </div>
+
+    <nav class="nav-right">
+      {% if user %}
+        <span class="user-name">{{ user.name }} さん</span>
+      {% else %}
+        <a href="/pages/login/" class="login-btn">ログイン</a>
+      {% endif %}
+    </nav>
   </header>
 
   <main>
@@ -17,7 +35,7 @@
   </main>
 
   <footer>
-    <p>© 2026 ひめちゃんのファンクラブ</p>
+    <p>ひめちゃんの支援クラブ</p>
   </footer>
 
 </body>

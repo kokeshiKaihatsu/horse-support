@@ -1,0 +1,16 @@
+---
+layout: layouts/base.njk
+title: 管理者ページ
+permalink: "/admin/index.html"
+---
+
+<h1>🔐 管理者ページ</h1>
+
+<ul class="admin-menu">
+  <li><a href="/admin/horses/">🐴 馬を追加する</a></li>
+  <li><a href="/admin/posts/">📝 タイムライン投稿を追加する</a></li>
+</ul>
+
+{% block styles %}
+<link rel="stylesheet" href="/styles/admin.css">
+{% endblock %}

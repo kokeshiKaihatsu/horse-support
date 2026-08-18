@@ -1,28 +1,56 @@
+const { DateTime } = require("luxon");
+
 module.exports = function(eleventyConfig) {
 
-  // 1. 静的ファイル（画像やadmin画面）を public にコピー
-  eleventyConfig.addPassthroughCopy("public");
+  // 年齢計算フィルター
+  eleventyConfig.addFilter("calcAge", function(birthday) {
+    const birth = new Date(birthday);
+    const today = new Date();
+    let age = today.getFullYear() - birth.getFullYear();
+    const m = today.getMonth() - birth.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
+      age--;
+    }
+    return age;
+  });
 
-  // 2. CMSが生成する Markdown を Eleventy の入力にする
+  // 日付フォーマットフィルター
+  eleventyConfig.addFilter("date", (dateObj, format = "yyyy/MM/dd") => {
+    // Eleventyが渡すdateが文字列でもDateでも対応
+    const date = typeof dateObj === "string"
+      ? DateTime.fromISO(dateObj)
+      : DateTime.fromJSDate(dateObj);
+    return date.setZone("Asia/Tokyo").toFormat(format);
+  });
+
+  // 馬コレクション
   eleventyConfig.addCollection("horses", function(collectionApi) {
-    return collectionApi.getFilteredByGlob("content/horses/*.md");
+    return collectionApi.getFilteredByGlob("src/horses/*.md");
   });
 
-  eleventyConfig.addCollection("posts", function(collectionApi) {
-    return collectionApi.getFilteredByGlob("content/posts/*.md");
+  // 会員限定ページ
+  eleventyConfig.addCollection("posts", (collectionApi) => {
+    return collectionApi.getFilteredByGlob([
+      "src/pages/timeline/*.md",
+      "src/pages/members/*.md"
+    ]);
   });
 
-  // 3. レイアウト（base.html）を使えるようにする
+  // レイアウト
   eleventyConfig.addLayoutAlias("base", "_includes/layouts/base.njk");
   eleventyConfig.addLayoutAlias("horse", "_includes/layouts/horse.html");
   eleventyConfig.addLayoutAlias("timeline", "_includes/layouts/timeline.html");
+  // パス
+  eleventyConfig.addPassthroughCopy("src/styles");
+  eleventyConfig.addPassthroughCopy("src/assets");
+  eleventyConfig.addPassthroughCopy("src/scripts");
 
 
-  // 4. 入力と出力のディレクトリ設定
+  // Eleventy設定
   return {
-   dir: {
+    dir: {
       input: "src",
-      includes: "_includes",   // ← 元に戻す（Eleventy v3 の仕様に合わせる）
+      includes: "_includes",
       data: "data",
       output: "public"
     },

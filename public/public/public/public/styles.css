@@ -1,0 +1,72 @@
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+}
+
+.menu-btn {
+  display: block;
+  padding: 16px 20px;
+  background: #fff;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 18px;
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.menu-btn:hover {
+  background: #f0f0f0;
+  border-color: #aaa;
+}
+
+.hero {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url("/images/hime.jpg");
+  background-size: cover;        /* ← ぼかしをやめて引き伸ばす */
+  background-position: center;   /* ← 中央を基準に */
+  filter: brightness(0.7);       /* ← 少し暗くして文字を見やすく */
+  transform: none;               /* ← scaleを削除 */
+}
+
+/* メイン画像（縦長） */
+.hero-img {
+  position: relative;
+  width: auto;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+  z-index: 1;
+}
+
+/* テキスト */
+.hero-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+  font-size: clamp(2rem, 6vw, 4rem);
+  z-index: 2;
+}
+
+
+.hero-subtitle {
+  white-space: normal; /* ← 自動改行を許可 */
+  word-break: keep-all; /* ← 日本語の途中で切らない */
+  font-size: clamp(1rem, 3vw, 2rem);
+}

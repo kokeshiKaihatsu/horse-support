@@ -2,29 +2,34 @@ backend:
   name: git-gateway
   branch: main
 
-media_folder: "public/images"
-public_folder: "/images"
+media_folder: "src/assets/images"
+public_folder: "/assets/images"
 
 collections:
-  # 馬プロフィール
   - name: "horses"
     label: "馬プロフィール"
-    folder: "content/horses"
+    folder: "src/horses"
+    create: true
+    slug: "{{id}}"
+    fields:
+      - { label: "ID", name: "id", widget: "string" }
+      - { label: "名前", name: "name", widget: "string" }
+      - { label: "誕生日", name: "birthday", widget: "date", format: "YYYY/MM/DD" }
+      - { label: "画像", name: "image", widget: "image" }
+      - { label: "説明", name: "description", widget: "text" }
+
+  - name: "posts"
+    label: "タイムライン投稿"
+    folder: "src/posts"
     create: true
     slug: "{{slug}}"
     fields:
-      - { label: "名前", name: "title", widget: "string" }
-      - { label: "プロフィール画像", name: "image", widget: "image", choose_url: false }
-      - { label: "紹介文", name: "body", widget: "markdown" }
-
-  # タイムライン投稿
-  - name: "posts"
-    label: "タイムライン投稿"
-    folder: "content/posts"
-    create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    fields:
       - { label: "タイトル", name: "title", widget: "string" }
-      - { label: "投稿画像", name: "image", widget: "image", choose_url: false }
+      - { label: "日付", name: "date", widget: "datetime" }
+      - { label: "馬ID", name: "horse_id", widget: "select", options: ["hime", "kokeshi", "momo"] }
       - { label: "本文", name: "body", widget: "markdown" }
-      - { label: "公開日", name: "date", widget: "datetime" }
+      - label: "画像"
+        name: "images"
+        widget: "list"
+        field:
+          { label: "画像", name: "image", widget: "image" }

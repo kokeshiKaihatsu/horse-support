@@ -1,0 +1,20 @@
+---
+layout: layouts/base.njk
+pagination:
+  data: collections.horses
+  size: 1
+  alias: horse
+permalink: "horses/{{ horse.fileSlug }}/index.html"
+---
+
+<h2>{{ horse.data.name }}</h2>
+
+{% if horse.data.image %}
+  <img src="{{ horse.data.image }}" alt="{{ horse.data.name }}" class="main-image">
+{% endif %}
+
+<p><strong>馬齢:</strong> {{ horse.data.birthday | calcAge }}</p>
+
+<p><strong>特徴:</strong> {{ horse.data.description }}</p>
+
+<p><a href="/horses/">← 馬一覧に戻る</a></p>

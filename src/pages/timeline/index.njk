@@ -1,0 +1,36 @@
+---
+layout: layouts/base.njk
+title: 活動タイムライン
+permalink: "/timeline/index.html"
+---
+
+<h1>🐴 活動タイムライン</h1>
+
+{% block styles %}
+  <link rel="stylesheet" href="/styles/timeline.css">
+{% endblock %}
+
+{% for post in collections.posts | sort(true) %}
+  <article class="timeline-item">
+    <h2>{{ post.data.title }}</h2>
+
+    <p class="date">{{ post.date | date("yyyy/MM/dd") }}</p>
+
+    <div class="timeline-images">
+      {% if post.data.images %}
+        {% for img in post.data.images %}
+         <img src="{{ img.image }}" alt="{{ post.data.title }}" class="timeline-img">
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    <div class="body">
+      {{ post.templateContent | safe }}
+    </div>
+  </article>
+{% endfor %}
+
+<div id="imgModal" class="modal">
+  <span class="close">&times;</span>
+  <img class="modal-content" id="modalImg">
+</div>

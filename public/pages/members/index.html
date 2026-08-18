@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>支援者限定タイムライン</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- 共通CSS -->
+  <link rel="stylesheet" href="/styles.css">
+
+  <!-- ページごとのCSSを読み込む -->
+  
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="logo">
+      <a href="/">こけし牧場</a>
+    </div>
+
+    <nav class="nav-right">
+      
+         <a href="/pages/login/" class="login-btn">ログイン</a>
+      
+    </nav>
+  </header>
+
+  <main>
+    
+<h1>🐴 支援者限定タイムライン</h1>
+
+<form id="horse-filter">
+  <label for="horseId">馬を選択：</label>
+  <select id="horseId">
+    <option value="">すべて</option>
+    <option value="hime">ひめちゃん</option>
+    <option value="kokeshi">こけしちゃん</option>
+    <option value="momo">ももちゃん</option>
+  </select>
+</form>
+
+<div id="timeline">
+  
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const select = document.getElementById("horseId");
+  const items = document.querySelectorAll(".timeline-item");
+
+  select.addEventListener("change", () => {
+    const value = select.value;
+    items.forEach(item => {
+      item.style.display = (!value || item.dataset.horse === value) ? "block" : "none";
+    });
+  });
+});
+</script>
+
+  </main>
+
+  <footer>
+    <p>ひめちゃんの支援クラブ</p>
+  </footer>
+
+</body>
+</html>

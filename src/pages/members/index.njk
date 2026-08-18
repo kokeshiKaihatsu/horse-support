@@ -1,0 +1,83 @@
+---
+layout: layouts/base.njk
+title: 支援者限定タイムライン
+permalink: "/members/index.html"
+---
+
+<h1>🐴 支援者限定タイムライン</h1>
+
+{% block styles %}
+  <link rel="stylesheet" href="/styles/members.css">
+{% endblock %}
+
+<!-- 馬フィルタ -->
+<form id="horse-filter">
+  <label for="horseId">馬を選択：</label>
+  <select id="horseId">
+    <option value="">すべて</option>
+
+    {% for horse in collections.horses %}
+      <option value="{{ horse.data.id }}">{{ horse.data.name }}</option>
+    {% endfor %}
+  </select>
+</form>
+
+<div id="timeline">
+
+  {% for post in collections.posts | sort(true) %}
+
+    {# horse_id に一致する馬データを探す #}
+    {% set horse = null %}
+    {% for h in collections.horses %}
+      {% if h.data.id == post.data.horse_id %}
+        {% set horse = h %}
+      {% endif %}
+    {% endfor %}
+
+    <article class="timeline-item" data-horse="{{ post.data.horse_id }}">
+
+      <!-- 馬アイコン＋名前 -->
+      {% if horse %}
+      <div class="horse-header">
+        <img src="{{ horse.data.image }}" alt="{{ horse.data.name }}" class="horse-icon">
+        <span class="horse-name">{{ horse.data.name }}</span>
+      </div>
+      {% endif %}
+
+      <h2>{{ post.data.title }}</h2>
+
+      <p class="date">{{ post.date | date("yyyy/MM/dd") }}</p>
+
+      {% if post.data.comment %}
+        <p class="comment">💬 {{ post.data.comment }}</p>
+      {% endif %}
+
+      <div class="timeline-images">
+        {% if post.data.images %}
+          {% for img in post.data.images %}
+            <img src="{{ img.image }}" alt="{{ post.data.title }}" class="timeline-img">
+          {% endfor %}
+        {% endif %}
+      </div>
+
+      <div class="body">
+        {{ post.templateContent | safe }}
+      </div>
+
+    </article>
+
+  {% endfor %}
+</div>
+
+<!-- モーダル本体 -->
+<div id="imgModal" class="modal">
+  <span class="close">&times;</span>
+
+  <div class="modal-inner">
+    <span id="prevBtn" class="nav-btn">&#9664;</span>
+    <img class="modal-content" id="modalImg">
+    <span id="nextBtn" class="nav-btn">&#9654;</span>
+  </div>
+</div>
+
+<script src="/scripts/members.js"></script>
