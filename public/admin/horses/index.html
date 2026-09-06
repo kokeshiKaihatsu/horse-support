@@ -23,16 +23,20 @@
 
     <nav class="nav-right">
       
-        <a href="/pages/login/" class="login-btn">ログイン</a>
+        <a href="/login/" class="login-btn">ログイン</a>
       
     </nav>
   </header>
 
   <main>
     
+
+  <link rel="stylesheet" href="/styles/admin.css">
+
+
 <h1>🐴 馬の追加</h1>
 
-<form id="addHorseForm">
+<form id="addHorseForm" class="admin-form">
   <label>馬ID（英字）</label>
   <input type="text" id="horseId" required>
 
@@ -42,10 +46,12 @@
   <label>画像</label>
   <input type="file" id="horseImage" accept="image/*">
 
+  <div id="imagePreview" class="image-preview"></div>
+
   <label>説明</label>
   <textarea id="horseDesc"></textarea>
 
-  <button type="submit">追加する</button>
+  <button type="submit" class="submit-btn">追加する</button>
 </form>
 
 <script src="/scripts/admin.js"></script>

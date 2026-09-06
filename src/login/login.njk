@@ -1,0 +1,26 @@
+---
+layout: layouts/base.njk
+title: ログイン
+permalink: "/login/"
+---
+
+{% block styles %}
+  <link rel="stylesheet" href="/styles/login.css">
+{% endblock %}
+
+<h1>🔐 ログイン</h1>
+
+<div class="login-box">
+  <label>メールアドレス</label>
+  <input type="email" id="loginEmail">
+
+  <label>パスワード</label>
+  <input type="password" id="loginPassword">
+
+  <button id="loginBtn">ログイン</button>
+
+  <p id="loginMessage"></p>
+</div>
+
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script src="/scripts/login.js"></script>

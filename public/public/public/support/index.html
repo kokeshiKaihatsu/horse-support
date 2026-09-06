@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>支援ページ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- 共通CSS -->
+  <link rel="stylesheet" href="/styles.css">
+
+  <!-- ページごとのCSSを読み込む -->
+  
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="logo">
+      <a href="/">こけし牧場</a>
+
+      
+      <a href="/admin/" class="admin-link">管理</a>
+    </div>
+
+    <nav class="nav-right">
+      
+        <a href="/pages/login/" class="login-btn">ログイン</a>
+      
+    </nav>
+  </header>
+
+  <main>
+    
+
+<link rel="stylesheet" href="/styles/support.css">
+
+
+<section class="support-page">
+
+  <h1>🐴 支援ページ</h1>
+
+  <!-- 支援状態切り替え -->
+  <div class="support-toggle">
+    <label>
+      支援状態：
+      <select id="support-status">
+        <option value="inactive">未支援</option>
+        <option value="active">支援中</option>
+      </select>
+    </label>
+  </div>
+
+  <!-- 支援中 UI -->
+  <div id="support-active" style="display:none;">
+    <h2>現在の支援状況</h2>
+    <p>支援口数：3口</p>
+    <p>月額：3000円</p>
+    <p>次回決済日：2026-09-01</p>
+
+    <!-- 支援口数の変更 -->
+    <div class="support-box">
+      <h2>支援口数の変更</h2>
+
+      <form id="support-change-form">
+        <label>
+          <strong>支援口数：</strong>
+          <select name="units">
+            <option value="1">1口</option>
+            <option value="3" selected>3口</option>
+            <option value="5">5口</option>
+            <option value="custom">任意入力</option>
+          </select>
+        </label>
+
+        <label id="custom-input" style="display:none; margin-top:10px;">
+          <strong>任意口数：</strong>
+          <input type="number" min="1" placeholder="例：7">
+        </label>
+
+        <button type="button" class="btn-primary">変更する（ダミー）</button>
+      </form>
+    </div>
+
+    <!-- 支援履歴 -->
+    <div class="support-box">
+      <h2>支援履歴</h2>
+      <ul>
+        <li>2026-07：3,000円</li>
+        <li>2026-08：3,000円</li>
+        <li>2026-09：予定：3,000円</li>
+      </ul>
+    </div>
+
+    <!-- 支援停止 -->
+    <div class="support-box">
+      <h2>支援の停止</h2>
+      <button class="btn-danger">支援を停止する（ダミー）</button>
+    </div>
+
+    <!-- 支援者向けメッセージ -->
+    <div class="support-box">
+      <h2>支援者向けメッセージ</h2>
+      <p>いつも支援ありがとうございます！</p>
+      <p>限定コンテンツはこちら：</p>
+      <a href="/members/" class="btn-link">→ 会員限定ページへ</a>
+    </div>
+  </div>
+
+  <!-- 未支援 UI -->
+  <div id="support-inactive" style="display:none;">
+    <h2>まだ支援は開始されていません</h2>
+
+    <p>こけし牧場の馬たちを応援するための月額支援を始めることができます。</p>
+
+    <p>支援を始めると：</p>
+    <ul class="benefits">
+      <li>🐴 近況レポート（写真付き）</li>
+      <li>📸 支援者限定の写真ギャラリー</li>
+      <li>🎥 動画レポート（不定期）</li>
+      <li>💬 支援者コミュニティへの参加</li>
+    </ul>
+
+    <p>支援は <strong>1口＝1,000円</strong> から始められます。</p>
+
+    <h3>支援を始める</h3>
+
+    <form id="support-start-form">
+      <label>
+        <strong>支援口数：</strong>
+        <select name="units">
+          <option value="1">1口（1,000円）</option>
+          <option value="3">3口（3,000円）</option>
+          <option value="5">5口（5,000円）</option>
+          <option value="custom">任意入力</option>
+        </select>
+      </label>
+
+      <label id="start-custom-input" style="display:none; margin-top:10px;">
+        <strong>任意口数：</strong>
+        <input type="number" min="1" placeholder="例：7">
+      </label>
+
+      <button type="button" class="btn-primary">支援を開始する（ダミー）</button>
+    </form>
+
+    <p class="note">
+      ※支援はいつでも停止できます。支援停止後も最後の支払いから一か月間は支援者限定ページを閲覧可能です。
+    </p>
+  </div>
+
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const statusSelect = document.getElementById("support-status");
+  const active = document.getElementById("support-active");
+  const inactive = document.getElementById("support-inactive");
+
+  function updateSupportStatus() {
+    const isSupporting = (statusSelect.value === "active");
+
+    active.style.display = isSupporting ? "block" : "none";
+    inactive.style.display = isSupporting ? "none" : "block";
+  }
+
+  updateSupportStatus();
+  statusSelect.addEventListener("change", updateSupportStatus);
+
+  // 任意口数（支援中）
+  const select = document.querySelector('#support-change-form select[name="units"]');
+  const customInput = document.getElementById('custom-input');
+  select.addEventListener('change', () => {
+    customInput.style.display = (select.value === 'custom') ? 'block' : 'none';
+  });
+
+  // 任意口数（支援開始）
+  const startSelect = document.querySelector('#support-start-form select[name="units"]');
+  const startCustomInput = document.getElementById('start-custom-input');
+  startSelect.addEventListener('change', () => {
+    startCustomInput.style.display = (startSelect.value === 'custom') ? 'block' : 'none';
+  });
+});
+</script>
+
+  </main>
+
+  <footer>
+    <p>ひめちゃんの支援クラブ</p>
+  </footer>
+
+</body>
+</html>

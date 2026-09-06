@@ -18,19 +18,13 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // 画像をBase64に変換
       const base64 = await fileToBase64(file);
 
-      // 保存先（GitHub上）
       const imagePath = `public/images/horses/${id}.jpg`;
-
-      // Markdownに書くパス
       const markdownImagePath = `/images/horses/${id}.jpg`;
 
-      // 画像アップロード
-      await saveFile(imagePath, base64, true);
+      await saveImageFile(imagePath, base64);
 
-      // 馬データMarkdown
       const content = `---
 id: ${id}
 name: ${name}
@@ -39,7 +33,7 @@ description: ${desc}
 ---
 `;
 
-      await saveFile(`src/horses/${id}.md`, content);
+      await saveTextFile(`src/horses/${id}.md`, content);
 
       alert("馬を追加しました！");
     });
@@ -71,7 +65,7 @@ description: ${desc}
         const imagePath = `src/assets/images/${filename}`;
         const markdownImagePath = `/assets/images/${filename}`;
 
-        await saveFile(imagePath, base64, true);
+        await saveImageFile(imagePath, base64);
 
         imagesYaml += `  - image: ${markdownImagePath}\n`;
         index++;
@@ -89,11 +83,49 @@ ${imagesYaml}
 ${body}
 `;
 
-      await saveFile(`src/posts/${mdFilename}`, content);
+      await saveTextFile(`src/posts/${mdFilename}`, content);
 
       alert("投稿を追加しました！");
     });
   }
+
+  // ============================
+  // 🔍 共通：画像プレビュー関数
+  // ============================
+  function setupImagePreview(inputId, previewId) {
+    const input = document.getElementById(inputId);
+    const preview = document.getElementById(previewId);
+
+    if (!input || !preview) return;
+
+    input.addEventListener("change", () => {
+      preview.innerHTML = "";
+
+      for (const file of input.files) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = document.createElement("img");
+          img.src = e.target.result;
+          img.style.width = "150px";
+          img.style.borderRadius = "8px";
+          img.style.marginRight = "10px";
+          img.style.marginBottom = "10px";
+          preview.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  }
+
+  // ============================
+  // 🔍 馬追加ページのプレビュー
+  // ============================
+  setupImagePreview("horseImage", "imagePreview");
+
+  // ============================
+  // 🔍 タイムライン投稿ページのプレビュー
+  // ============================
+  setupImagePreview("postImages", "imagePreview");
 
 });
 
@@ -112,39 +144,78 @@ function fileToBase64(file) {
 
 
 // ============================
-// 🔧 Git Gateway 保存（画像対応）
+// 🔧 テキスト保存（ローカル or 本番）
 // ============================
-async function saveFile(path, content, isBinary = false) {
-  const token = "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"; // ← ローカル専用。絶対に公開しない。
+async function saveTextFile(path, content) {
 
-  await fetch(`https://api.github.com/repos/kokeshiKaihatsu/horse-support/contents/${path}`, {
+  if (location.hostname === "localhost") {
+    const blob = new Blob([content], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = path.split("/").pop();
+    a.click();
+
+    URL.revokeObjectURL(url);
+    return;
+  }
+
+  const user = netlifyIdentity.currentUser();
+  const token = await user.jwt();
+
+  await fetch(`/.netlify/git/github/contents/${path}`, {
     method: "PUT",
     headers: {
-      "Authorization": `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
       message: `Add ${path}`,
-      content: isBinary ? content : btoa(content), // ← 画像はそのまま、テキストは btoa
-      encoding: isBinary ? "base64" : "utf-8"
+      content: btoa(content),
+      encoding: "utf-8"
     })
   });
 }
 
-// async function saveFile(path, content, isBinary = false) {
-//   const user = netlifyIdentity.currentUser();
-//   const token = await user.jwt();
 
-//   await fetch(`/.netlify/git/github/contents/${path}`, {
-//     method: "PUT",
-//     headers: {
-//       Authorization: `Bearer ${token}`,
-//       "Content-Type": "application/json"
-//     },
-//     body: JSON.stringify({
-//       message: `Add ${path}`,
-//       content: isBinary ? content : btoa(content),
-//       encoding: isBinary ? "base64" : "utf-8"
-//     })
-//   });
-// }
+// ============================
+// 🔧 画像保存（ローカル or 本番）
+// ============================
+async function saveImageFile(path, base64Data) {
+
+  if (location.hostname === "localhost") {
+    const byteString = atob(base64Data);
+    const array = new Uint8Array(byteString.length);
+    for (let i = 0; i < byteString.length; i++) {
+      array[i] = byteString.charCodeAt(i);
+    }
+
+    const blob = new Blob([array], { type: "image/jpeg" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = path.split("/").pop();
+    a.click();
+
+    URL.revokeObjectURL(url);
+    return;
+  }
+
+  const user = netlifyIdentity.currentUser();
+  const token = await user.jwt();
+
+  await fetch(`/.netlify/git/github/contents/${path}`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      message: `Add ${path}`,
+      content: base64Data,
+      encoding: "base64"
+    })
+  });
+}

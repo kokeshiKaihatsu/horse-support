@@ -4,9 +4,14 @@ title: タイムライン投稿の追加
 permalink: "/admin/posts/index.html"
 ---
 
+{% block styles %}
+  <link rel="stylesheet" href="/styles/admin.css">
+{% endblock %}
+
 <h1>📝 タイムライン投稿の追加</h1>
 
-<form id="addPostForm">
+<form id="addPostForm" class="admin-form">
+
   <label>タイトル</label>
   <input type="text" id="postTitle" required>
 
@@ -22,7 +27,7 @@ permalink: "/admin/posts/index.html"
 
   <label>画像</label>
   <input type="file" id="postImages" accept="image/*" multiple>
-
+  <div id="imagePreview" class="image-preview"></div>
 
   <button type="submit">投稿する</button>
 </form>

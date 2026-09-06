@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>支援者限定タイムライン</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- 共通CSS -->
+  <link rel="stylesheet" href="/styles.css">
+
+  <!-- ページごとのCSSを読み込む -->
+  
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="logo">
+      <a href="/">こけし牧場</a>
+
+      
+      <a href="/admin/" class="admin-link">管理</a>
+    </div>
+
+    <nav class="nav-right">
+      
+        <a href="/pages/login/" class="login-btn">ログイン</a>
+      
+    </nav>
+  </header>
+
+  <main>
+    
+<h1>🐴 支援者限定タイムライン</h1>
+
+
+  <link rel="stylesheet" href="/styles/members.css">
+
+
+<!-- 馬フィルタ -->
+<form id="horse-filter">
+  <label for="horseId">馬を選択：</label>
+  <select id="horseId">
+    <option value="">すべて</option>
+
+    
+      <option value="hime">ヒメ</option>
+    
+      <option value="kokeshi">ﾃﾞｰｽｹ</option>
+    
+  </select>
+</form>
+
+<div id="timeline">
+
+  
+
+    
+    
+    
+      
+        
+      
+    
+      
+    
+
+    <article class="timeline-item" data-horse="hime">
+
+      <!-- 馬アイコン＋名前 -->
+      
+      <div class="horse-header">
+        <img src="/images/horses/hime.jpg" alt="ヒメ" class="horse-icon">
+        <span class="horse-name">ヒメ</span>
+      </div>
+      
+
+      <h2>今日のひめちゃん</h2>
+
+      <p class="date">2026/08/15</p>
+
+      
+        <p class="comment">💬 この間の姫</p>
+      
+
+      <div class="timeline-images">
+        
+          
+            <img src="/assets/images/2026-08-15-1.jpg" alt="今日のひめちゃん" class="timeline-img">
+          
+            <img src="/assets/images/2026-08-15-2.jpg" alt="今日のひめちゃん" class="timeline-img">
+          
+            <img src="/assets/images/hime.jpg" alt="今日のひめちゃん" class="timeline-img">
+          
+        
+      </div>
+
+      <div class="body">
+        
+      </div>
+
+    </article>
+
+  
+
+    
+    
+    
+      
+        
+      
+    
+      
+    
+
+    <article class="timeline-item" data-horse="hime">
+
+      <!-- 馬アイコン＋名前 -->
+      
+      <div class="horse-header">
+        <img src="/images/horses/hime.jpg" alt="ヒメ" class="horse-icon">
+        <span class="horse-name">ヒメ</span>
+      </div>
+      
+
+      <h2>今日のひめちゃん</h2>
+
+      <p class="date">2026/08/15</p>
+
+      
+        <p class="comment">💬 今日もかわいい</p>
+      
+
+      <div class="timeline-images">
+        
+          
+            <img src="/assets/images/2026-08-15-1.jpg" alt="今日のひめちゃん" class="timeline-img">
+          
+            <img src="/assets/images/2026-08-15-2.jpg" alt="今日のひめちゃん" class="timeline-img">
+          
+            <img src="/assets/images/hime.jpg" alt="今日のひめちゃん" class="timeline-img">
+          
+        
+      </div>
+
+      <div class="body">
+        
+      </div>
+
+    </article>
+
+  
+</div>
+
+<!-- モーダル本体 -->
+<div id="imgModal" class="modal">
+  <span class="close">&times;</span>
+
+  <div class="modal-inner">
+    <span id="prevBtn" class="nav-btn">&#9664;</span>
+    <img class="modal-content" id="modalImg">
+    <span id="nextBtn" class="nav-btn">&#9654;</span>
+  </div>
+</div>
+
+<script src="/scripts/members.js"></script>
+
+  </main>
+
+  <footer>
+    <p>ひめちゃんの支援クラブ</p>
+  </footer>
+
+</body>
+</html>

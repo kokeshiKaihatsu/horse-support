@@ -1,0 +1,66 @@
+.thumb {
+  max-width: 200px;
+  height: auto;
+  border-radius: 8px;
+}
+
+.horse-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.horse-card {
+  background: #fffaf0; /* 柔らかいベージュ背景 */
+  border: 2px solid #ccc; /* 枠線 */
+  border-radius: 10px; /* 角丸 */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* 影 */
+  width: 250px;
+  padding: 1rem;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.horse-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.horse-card img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.horse-card h3 {
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+}
+
+.horse-card p {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.horse-info {
+  text-align: left;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0.8rem 0;
+  display: inline-block;
+}
+
+.horse-info p {
+  margin: 0.2rem 0;
+  font-family: "Yu Gothic", sans-serif;
+  letter-spacing: 0.05em;
+}
+
+.horse-info strong {
+  display: inline-block;
+  width: 6em; /* ラベル部分を揃える */
+  color: #444;
+}

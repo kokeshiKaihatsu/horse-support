@@ -1,38 +1,71 @@
-/* 管理画面専用スタイル */
+/* ============================
+   管理画面フォーム（縦並び）
+   ============================ */
 
-main {
-  max-width: 800px;
+.admin-form {
+  display: flex;               /* ← 縦並び */
+  flex-direction: column;      /* ← 縦方向に積む */
+  gap: 1.2rem;                 /* ← 各項目の間に余白 */
+  max-width: 600px;
   margin: 2rem auto;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   padding: 2rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-h1 {
-  font-size: 1.8rem;
-  margin-bottom: 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+/* ラベル */
+.admin-form label {
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 0.3rem;       /* ラベルと入力欄の距離 */
 }
 
-.admin-menu {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+/* 入力欄・ファイル選択・テキストエリア */
+.admin-form input[type="text"],
+.admin-form input[type="file"],
+.admin-form textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #fafafa;
 }
 
-.admin-menu a {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
+/* 説明欄の高さ */
+.admin-form textarea {
+  height: 120px;
+  resize: vertical;
+}
+
+/* 送信ボタン */
+.submit-btn {
+  width: 100%;
+  padding: 1rem;
+  background: #0077cc;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
   font-size: 1.1rem;
-  color: #0078d4;
-  font-weight: 500;
-  text-decoration: underline; /* ← 青字＋下線 */
+  cursor: pointer;
+  transition: background 0.2s ease;
 }
 
-.admin-menu a:hover {
-  opacity: 0.8;
+.submit-btn:hover {
+  background: #005fa3;
+}
+
+.image-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.image-preview img {
+  width: 150px;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid #ccc;
 }

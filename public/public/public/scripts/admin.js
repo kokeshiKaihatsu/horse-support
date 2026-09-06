@@ -21,14 +21,14 @@ document.addEventListener("DOMContentLoaded", () => {
       // 画像をBase64に変換
       const base64 = await fileToBase64(file);
 
-      // 保存先（GitHub上）
+      // 保存先
       const imagePath = `public/images/horses/${id}.jpg`;
 
-      // Markdownに書くパス
+      // Markdownに書くパス（ローカルでも本番でも同じ）
       const markdownImagePath = `/images/horses/${id}.jpg`;
 
-      // 画像アップロード
-      await saveFile(imagePath, base64, true);
+      // 画像保存（ローカル or 本番）
+      await saveImageFile(imagePath, base64);
 
       // 馬データMarkdown
       const content = `---
@@ -39,7 +39,7 @@ description: ${desc}
 ---
 `;
 
-      await saveFile(`src/horses/${id}.md`, content);
+      await saveTextFile(`src/horses/${id}.md`, content);
 
       alert("馬を追加しました！");
     });
@@ -71,7 +71,7 @@ description: ${desc}
         const imagePath = `src/assets/images/${filename}`;
         const markdownImagePath = `/assets/images/${filename}`;
 
-        await saveFile(imagePath, base64, true);
+        await saveImageFile(imagePath, base64);
 
         imagesYaml += `  - image: ${markdownImagePath}\n`;
         index++;
@@ -89,7 +89,7 @@ ${imagesYaml}
 ${body}
 `;
 
-      await saveFile(`src/posts/${mdFilename}`, content);
+      await saveTextFile(`src/posts/${mdFilename}`, content);
 
       alert("投稿を追加しました！");
     });
@@ -112,39 +112,82 @@ function fileToBase64(file) {
 
 
 // ============================
-// 🔧 Git Gateway 保存（画像対応）
+// 🔧 テキスト保存（ローカル or 本番）
 // ============================
-async function saveFile(path, content, isBinary = false) {
-  const token = "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"; // ← ローカル専用。絶対に公開しない。
+async function saveTextFile(path, content) {
 
-  await fetch(`https://api.github.com/repos/kokeshiKaihatsu/horse-support/contents/${path}`, {
+  // ローカル環境（localhost）
+  if (location.hostname === "localhost") {
+    const blob = new Blob([content], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = path.split("/").pop();
+    a.click();
+
+    URL.revokeObjectURL(url);
+    return;
+  }
+
+  // 本番環境（Netlify）
+  const user = netlifyIdentity.currentUser();
+  const token = await user.jwt();
+
+  await fetch(`/.netlify/git/github/contents/${path}`, {
     method: "PUT",
     headers: {
-      "Authorization": `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
       message: `Add ${path}`,
-      content: isBinary ? content : btoa(content), // ← 画像はそのまま、テキストは btoa
-      encoding: isBinary ? "base64" : "utf-8"
+      content: btoa(content),
+      encoding: "utf-8"
     })
   });
 }
 
-// async function saveFile(path, content, isBinary = false) {
-//   const user = netlifyIdentity.currentUser();
-//   const token = await user.jwt();
 
-//   await fetch(`/.netlify/git/github/contents/${path}`, {
-//     method: "PUT",
-//     headers: {
-//       Authorization: `Bearer ${token}`,
-//       "Content-Type": "application/json"
-//     },
-//     body: JSON.stringify({
-//       message: `Add ${path}`,
-//       content: isBinary ? content : btoa(content),
-//       encoding: isBinary ? "base64" : "utf-8"
-//     })
-//   });
-// }
+// ============================
+// 🔧 画像保存（ローカル or 本番）
+// ============================
+async function saveImageFile(path, base64Data) {
+
+  // ローカル環境（localhost）
+  if (location.hostname === "localhost") {
+    const byteString = atob(base64Data);
+    const array = new Uint8Array(byteString.length);
+    for (let i = 0; i < byteString.length; i++) {
+      array[i] = byteString.charCodeAt(i);
+    }
+
+    const blob = new Blob([array], { type: "image/jpeg" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = path.split("/").pop();
+    a.click();
+
+    URL.revokeObjectURL(url);
+    return;
+  }
+
+  // 本番環境（Netlify）
+  const user = netlifyIdentity.currentUser();
+  const token = await user.jwt();
+
+  await fetch(`/.netlify/git/github/contents/${path}`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      message: `Add ${path}`,
+      content: base64Data,
+      encoding: "base64"
+    })
+  });
+}
