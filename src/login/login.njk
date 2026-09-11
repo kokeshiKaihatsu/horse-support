@@ -8,19 +8,40 @@ permalink: "/login/"
   <link rel="stylesheet" href="/styles/login.css">
 {% endblock %}
 
-<h1>🔐 ログイン</h1>
-
-<div class="login-box">
-  <label>メールアドレス</label>
-  <input type="email" id="loginEmail">
-
-  <label>パスワード</label>
-  <input type="password" id="loginPassword">
-
-  <button id="loginBtn">ログイン</button>
-
-  <p id="loginMessage"></p>
-</div>
-
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-<script src="/scripts/login.js"></script>
+
+<h2>ログイン</h2>
+
+<form id="loginForm">
+  <label>メールアドレス</label><br>
+  <input type="email" id="email" required><br><br>
+
+  <label>パスワード</label><br>
+  <input type="password" id="password" required><br><br>
+
+  <button type="submit">ログインする</button>
+</form>
+
+<hr>
+
+<h3>まだ登録していない方</h3>
+<button onclick="netlifyIdentity.open('signup')">新規登録</button>
+
+<script>
+  document.getElementById("loginForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    try {
+      const user = await netlifyIdentity.login(email, password, true);
+      console.log("ログイン成功:", user);
+      window.location.href = "/members/";
+    } catch (err) {
+      alert("ログインできませんでした。メールまたはパスワードを確認してください。");
+      console.error(err);
+    }
+  });
+</script>
+
