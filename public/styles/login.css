@@ -1,24 +1,61 @@
-.login-box {
-  max-width: 400px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+/* ===== ログイン画面全体 ===== */
+.login-wrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+/* ===== カード風ボックス ===== */
+.login-card,
+.login-box {
+  max-width: 550px;   
+  padding: 3rem; 
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+  text-align: center;
+}
+
+/* ===== 見出し ===== */
+.login-card h2,
+.login-box h2 {
+  font-size: 2rem; 
+  margin-bottom: 2rem;
+}
+
+/* ===== 入力欄 ===== */
+.login-card input,
 .login-box input {
   width: 100%;
-  padding: 0.6rem;
-  margin-bottom: 1rem;
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1.2rem; 
 }
 
+/* ===== ボタンサイズ ===== */
+.login-card button,
 .login-box button {
   width: 100%;
-  padding: 0.8rem;
-  background: #0066cc;
-  color: #fff;
+  padding: 1.2rem; 
   border: none;
-  border-radius: 6px;
-  font-size: 1rem;
+  border-radius: 8px;
+  background: #0077cc;
+  color: #fff;
+  font-size: 1.3rem; 
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.login-card button:hover,
+.login-box button:hover {
+  background: #005fa3;
+}
+
+/* ===== 新規登録ボタン ===== */
+.signup-btn {
+  margin-top: 1.5rem;
+  background: #555;
 }

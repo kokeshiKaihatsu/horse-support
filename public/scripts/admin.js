@@ -1,5 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+  if (window.netlifyIdentity) {
+  window.netlifyIdentity.on('init', user => {
+    if (!user) {
+      window.netlifyIdentity.on('login', () => {
+        document.location.href = '/admin/';
+      });
+    }
+  });
+
+  // 🔥 これがないと Invalid state key が出る
+  window.netlifyIdentity.on('error', err => console.error('Identity error:', err));
+}
+
   // ============================
   // 🐴 馬追加（画像1枚）
   // ============================
@@ -126,6 +139,107 @@ ${body}
   // 🔍 タイムライン投稿ページのプレビュー
   // ============================
   setupImagePreview("postImages", "imagePreview");
+
+  // ============================
+  // 🐴 インライン編集（馬一覧）
+  // ============================
+  document.querySelectorAll(".edit-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+
+      const card = btn.closest(".horse-card");   // ← クリックされたカードを取得
+      const viewMode = card.querySelector(".view-mode");
+      const editMode = card.querySelector(".edit-mode");
+
+      viewMode.style.display = "none";
+      editMode.style.display = "block";
+    });
+  });
+
+  document.querySelectorAll(".cancel-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+
+      const card = btn.closest(".horse-card");
+      const viewMode = card.querySelector(".view-mode");
+      const editMode = card.querySelector(".edit-mode");
+
+      editMode.style.display = "none";
+      viewMode.style.display = "block";
+    });
+  });
+
+document.querySelectorAll(".save-btn").forEach(btn => {
+  btn.addEventListener("click", async () => {
+
+    const card = btn.closest(".horse-card");
+    const id = card.dataset.id;
+
+    const name = card.querySelector(".edit-name").value;
+    const birthday = card.querySelector(".edit-birthday").value;
+    const desc = card.querySelector(".edit-desc").value;
+
+    // 既存画像パス（view-mode の img から取る）
+    let imagePathMarkdown = card.querySelector(".view-mode img").getAttribute("src");
+
+    // 新しい画像が選択された場合のみ更新
+    const fileInput = card.querySelector(".edit-image-file");
+    let base64 = null;
+
+    if (fileInput.files.length > 0) {
+      const file = fileInput.files[0];
+      base64 = await fileToBase64(file);
+
+      const imagePath = `public/images/horses/${id}.jpg`;
+      imagePathMarkdown = `/images/horses/${id}.jpg`;
+
+      await saveImageFile(imagePath, base64);
+    }
+
+    // md の内容（インデント無し）
+    const content = `---
+id: ${id}
+name: ${name}
+image: ${imagePathMarkdown}
+birthday: ${birthday}
+description: ${desc}
+---
+`;
+
+    // ============================
+    // 🟥 ローカル保存（本当に md を上書き）
+    // ============================
+    if (location.hostname === "localhost") {
+
+    // md 保存
+    await fetch("http://localhost:3001/api/save-horse", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, content })
+    });
+
+    // 画像保存
+    if (base64) {
+      await fetch("http://localhost:3001/api/save-image", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, base64 })
+      });
+    }
+
+    alert("ローカルに保存しました！");
+    location.reload();
+    return;
+  }
+
+
+    // ============================
+    // 🟩 本番保存（GitHub API）
+    // ============================
+    await saveTextFile(`src/horses/${id}.md`, content);
+
+    alert("保存しました！");
+    location.reload();
+  });
+});
 
 });
 

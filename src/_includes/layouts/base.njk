@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
+
 <head>
   <meta charset="UTF-8">
   <title>{{ title }}</title>
@@ -11,32 +13,32 @@
   <!-- ページごとのCSSを読み込む -->
   {% block styles %}{% endblock %}
 </head>
-<body>
+  <body>
 
-  <header class="site-header">
-    <div class="logo">
-      <a href="/">こけし牧場</a>
+    <header class="site-header">
+      <div class="logo">
+        <a href="/">ホームに戻る</a>
 
-      {# 管理者リンク（今は常に表示） #}
-      <a href="/admin/" class="admin-link">管理</a>
-    </div>
+        {# 管理者リンク（今は常に表示） #}
+        <a href="/admin/" class="admin-link">管理</a>
+      </div>
 
-    <nav class="nav-right">
-      {% if user %}
-        <span class="user-name">{{ user.name }} さん</span>
-      {% else %}
-        <a href="/login/" class="login-btn">ログイン</a>
-      {% endif %}
-    </nav>
-  </header>
+      <nav class="nav-right">
+        {% if user %}
+          <span class="user-name">{{ user.name }} さん</span>
+        {% else %}
+          <a href="/login/" class="login-btn">ログイン</a>
+        {% endif %}
+      </nav>
+    </header>
 
-  <main>
-    {{ content | safe }}
-  </main>
+    <main>
+      {{ content | safe }}
+    </main>
 
-  <footer>
-    <p>ひめちゃんの支援クラブ</p>
-  </footer>
+    <footer>
+      <p>ひめちゃんの支援クラブ</p>
+    </footer>
 
-</body>
+  </body>
 </html>

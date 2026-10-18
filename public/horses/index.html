@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
+
 <head>
   <meta charset="UTF-8">
   <title>馬一覧</title>
@@ -11,25 +13,25 @@
   <!-- ページごとのCSSを読み込む -->
   
 </head>
-<body>
+  <body>
 
-  <header class="site-header">
-    <div class="logo">
-      <a href="/">こけし牧場</a>
+    <header class="site-header">
+      <div class="logo">
+        <a href="/">ホームに戻る</a>
 
+        
+        <a href="/admin/" class="admin-link">管理</a>
+      </div>
+
+      <nav class="nav-right">
+        
+          <a href="/login/" class="login-btn">ログイン</a>
+        
+      </nav>
+    </header>
+
+    <main>
       
-      <a href="/admin/" class="admin-link">管理</a>
-    </div>
-
-    <nav class="nav-right">
-      
-        <a href="/login/" class="login-btn">ログイン</a>
-      
-    </nav>
-  </header>
-
-  <main>
-    
 <link rel="stylesheet" href="/styles/horses.css">
 
 
@@ -37,35 +39,85 @@
 
 <div class="horse-list">
   
-    <div class="horse-card">
-      <h3><a href="false">ヒメ</a></h3>
-      <img src="/images/horses/hime.jpg" alt="ヒメ">
-      <div class="horse-info">
-        <p><strong>誕生日　：</strong> 2009/03/09</p>
-        <p><strong>年齢　　：</strong> 17</p>
-        <p><strong>特徴　　：</strong> やちぷえさんのひめ</p>
+    <div class="horse-card" data-id="hime">
+
+      <!-- 編集ボタン（インライン編集用） -->
+      <button class="edit-btn">✏️</button>
+
+      <!-- 通常表示 -->
+      <div class="view-mode">
+        <h3>ヒメ</h3>
+        <img src="/images/horses/hime.jpg" alt="ヒメ">
+        <div class="horse-info">
+          <p><strong>誕生日　：</strong> 2009/03/09</p>
+          <p><strong>年齢　　：</strong> 17</p>
+          <p><strong>特徴　　：</strong> やちぷえさんはひめ</p>
+        </div>
+      </div>
+
+      <!-- 編集モード（最初は非表示） -->
+      <div class="edit-mode" style="display:none;">
+        <label>名前</label>
+        <input type="text" class="edit-name" value="ヒメ">
+
+        <label>画像</label>
+        <input type="file" class="edit-image-file" accept="image/*">
+
+        <label>誕生日</label>
+        <input type="text" class="edit-birthday" value="2009/03/09">
+
+        <label>特徴</label>
+        <textarea class="edit-desc">やちぷえさんはひめ</textarea>
+
+        <button class="save-btn">保存</button>
+        <button class="cancel-btn">キャンセル</button>
       </div>
     </div>
   
-    <div class="horse-card">
-      <h3><a href="false">ﾃﾞｰｽｹ</a></h3>
-      <img src="/images/horses/desuke.jpg" alt="ﾃﾞｰｽｹ">
-      <div class="horse-info">
-        <p><strong>誕生日　：</strong> 1991/08/06</p>
-        <p><strong>年齢　　：</strong> 35</p>
-        <p><strong>特徴　　：</strong> 35歳　未勝利</p>
+    <div class="horse-card" data-id="kokeshi">
+
+      <!-- 編集ボタン（インライン編集用） -->
+      <button class="edit-btn">✏️</button>
+
+      <!-- 通常表示 -->
+      <div class="view-mode">
+        <h3>ﾃﾞｰｽｹ</h3>
+        <img src="/images/horses/desuke.jpg" alt="ﾃﾞｰｽｹ">
+        <div class="horse-info">
+          <p><strong>誕生日　：</strong> 1991/08/06</p>
+          <p><strong>年齢　　：</strong> 35</p>
+          <p><strong>特徴　　：</strong> 35歳　未勝利</p>
+        </div>
+      </div>
+
+      <!-- 編集モード（最初は非表示） -->
+      <div class="edit-mode" style="display:none;">
+        <label>名前</label>
+        <input type="text" class="edit-name" value="ﾃﾞｰｽｹ">
+
+        <label>画像</label>
+        <input type="file" class="edit-image-file" accept="image/*">
+
+        <label>誕生日</label>
+        <input type="text" class="edit-birthday" value="1991/08/06">
+
+        <label>特徴</label>
+        <textarea class="edit-desc">35歳　未勝利</textarea>
+
+        <button class="save-btn">保存</button>
+        <button class="cancel-btn">キャンセル</button>
       </div>
     </div>
   
 </div>
 
+<script src="/scripts/admin.js"></script>
 
+    </main>
 
-  </main>
+    <footer>
+      <p>ひめちゃんの支援クラブ</p>
+    </footer>
 
-  <footer>
-    <p>ひめちゃんの支援クラブ</p>
-  </footer>
-
-</body>
+  </body>
 </html>

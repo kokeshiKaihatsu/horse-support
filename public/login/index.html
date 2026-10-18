@@ -1,82 +1,15 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <title>ログイン</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- 共通CSS -->
-  <link rel="stylesheet" href="/styles.css">
-
-  <!-- ページごとのCSSを読み込む -->
-  
-</head>
-<body>
-
-  <header class="site-header">
-    <div class="logo">
-      <a href="/">こけし牧場</a>
-
-      
-      <a href="/admin/" class="admin-link">管理</a>
-    </div>
-
-    <nav class="nav-right">
-      
-        <a href="/login/" class="login-btn">ログイン</a>
-      
-    </nav>
-  </header>
-
-  <main>
-    
 
   <link rel="stylesheet" href="/styles/login.css">
 
 
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 
-<h2>ログイン</h2>
+<div class="login-wrapper">
+  <div class="login-card">
+    <h2>ログイン</h2>
 
-<form id="loginForm">
-  <label>メールアドレス</label><br>
-  <input type="email" id="email" required><br><br>
-
-  <label>パスワード</label><br>
-  <input type="password" id="password" required><br><br>
-
-  <button type="submit">ログインする</button>
-</form>
-
-<hr>
-
-<h3>まだ登録していない方</h3>
-<button onclick="netlifyIdentity.open('signup')">新規登録</button>
-
-<script>
-  document.getElementById("loginForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-
-    try {
-      const user = await netlifyIdentity.login(email, password, true);
-      console.log("ログイン成功:", user);
-      window.location.href = "/members/";
-    } catch (err) {
-      alert("ログインできませんでした。メールまたはパスワードを確認してください。");
-      console.error(err);
-    }
-  });
-</script>
-
-
-  </main>
-
-  <footer>
-    <p>ひめちゃんの支援クラブ</p>
-  </footer>
-
-</body>
-</html>
+    <button id="loginBtn" class="login-btn">
+      ログイン
+    </button>
+  </div>
+</div>

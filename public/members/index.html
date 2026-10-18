@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
+
 <head>
   <meta charset="UTF-8">
   <title>支援者限定タイムライン</title>
@@ -11,25 +13,25 @@
   <!-- ページごとのCSSを読み込む -->
   
 </head>
-<body>
+  <body>
 
-  <header class="site-header">
-    <div class="logo">
-      <a href="/">こけし牧場</a>
+    <header class="site-header">
+      <div class="logo">
+        <a href="/">ホームに戻る</a>
 
+        
+        <a href="/admin/" class="admin-link">管理</a>
+      </div>
+
+      <nav class="nav-right">
+        
+          <a href="/login/" class="login-btn">ログイン</a>
+        
+      </nav>
+    </header>
+
+    <main>
       
-      <a href="/admin/" class="admin-link">管理</a>
-    </div>
-
-    <nav class="nav-right">
-      
-        <a href="/login/" class="login-btn">ログイン</a>
-      
-    </nav>
-  </header>
-
-  <main>
-    
 <h1>🐴 支援者限定タイムライン</h1>
 
 
@@ -43,10 +45,6 @@
     <option value="">すべて</option>
 
     
-      <option value="hime">ヒメ</option>
-    
-      <option value="kokeshi">ﾃﾞｰｽｹ</option>
-    
   </select>
 </form>
 
@@ -57,21 +55,10 @@
     
     
     
-      
-        
-      
-    
-      
-    
 
     <article class="timeline-item" data-horse="hime">
 
       <!-- 馬アイコン＋名前 -->
-      
-      <div class="horse-header">
-        <img src="/images/horses/hime.jpg" alt="ヒメ" class="horse-icon">
-        <span class="horse-name">ヒメ</span>
-      </div>
       
 
       <h2>今日のひめちゃん</h2>
@@ -105,21 +92,10 @@
     
     
     
-      
-        
-      
-    
-      
-    
 
     <article class="timeline-item" data-horse="hime">
 
       <!-- 馬アイコン＋名前 -->
-      
-      <div class="horse-header">
-        <img src="/images/horses/hime.jpg" alt="ヒメ" class="horse-icon">
-        <span class="horse-name">ヒメ</span>
-      </div>
       
 
       <h2>今日のひめちゃん</h2>
@@ -164,11 +140,11 @@
 
 <script src="/scripts/members.js"></script>
 
-  </main>
+    </main>
 
-  <footer>
-    <p>ひめちゃんの支援クラブ</p>
-  </footer>
+    <footer>
+      <p>ひめちゃんの支援クラブ</p>
+    </footer>
 
-</body>
+  </body>
 </html>

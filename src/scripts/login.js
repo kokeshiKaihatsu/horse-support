@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const emailInput = document.getElementById("loginEmail");
   const passInput = document.getElementById("loginPassword");
   const message = document.getElementById("loginMessage");
+  const form = document.getElementById("loginForm");
 
   loginBtn.addEventListener("click", async () => {
     const email = emailInput.value;
@@ -18,4 +19,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  if (!loginBtn) return;
+
+  loginBtn.addEventListener("click", () => {
+    netlifyIdentity.open("login");
+  });
+
+  netlifyIdentity.on("login", () => {
+    window.location.href = "/members/";
+  });
 });

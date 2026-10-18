@@ -4,6 +4,10 @@
   padding: 1rem 2rem;
 }
 
+body {
+  font-family: "M PLUS Rounded 1c", sans-serif;
+}
+
 .nav-right {
   margin-left: auto; /* 右端に押し出す */
 }
@@ -59,7 +63,7 @@
 .hero-bg {
   position: absolute;
   inset: 0;
-  background-image: url("/images/hime.jpg");
+  background-image: url("/images/top_image.jpg");
   background-size: cover;        /* ← ぼかしをやめて引き伸ばす */
   background-position: center;   /* ← 中央を基準に */
   filter: brightness(0.7);       /* ← 少し暗くして文字を見やすく */

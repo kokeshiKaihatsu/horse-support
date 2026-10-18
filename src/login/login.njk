@@ -1,47 +1,15 @@
----
-layout: layouts/base.njk
-title: ログイン
-permalink: "/login/"
----
-
 {% block styles %}
   <link rel="stylesheet" href="/styles/login.css">
 {% endblock %}
 
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 
-<h2>ログイン</h2>
+<div class="login-wrapper">
+  <div class="login-card">
+    <h2>ログイン</h2>
 
-<form id="loginForm">
-  <label>メールアドレス</label><br>
-  <input type="email" id="email" required><br><br>
-
-  <label>パスワード</label><br>
-  <input type="password" id="password" required><br><br>
-
-  <button type="submit">ログインする</button>
-</form>
-
-<hr>
-
-<h3>まだ登録していない方</h3>
-<button onclick="netlifyIdentity.open('signup')">新規登録</button>
-
-<script>
-  document.getElementById("loginForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-
-    try {
-      const user = await netlifyIdentity.login(email, password, true);
-      console.log("ログイン成功:", user);
-      window.location.href = "/members/";
-    } catch (err) {
-      alert("ログインできませんでした。メールまたはパスワードを確認してください。");
-      console.error(err);
-    }
-  });
-</script>
-
+    <button id="loginBtn" class="login-btn">
+      ログイン
+    </button>
+  </div>
+</div>
