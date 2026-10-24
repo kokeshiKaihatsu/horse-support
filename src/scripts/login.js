@@ -3,11 +3,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!loginBtn) return;
 
+  const user = netlifyIdentity.currentUser();
+
+  if (user) {
+    loginBtn.textContent = user.user_metadata.full_name;
+  }
+
   loginBtn.addEventListener("click", () => {
-    netlifyIdentity.open("login");
+    if (netlifyIdentity.currentUser()) {
+      window.location.href = "/members/";
+    } else {
+      netlifyIdentity.open("login");
+    }
   });
 
-  netlifyIdentity.on("login", () => {
+  netlifyIdentity.on("login", (user) => {
+    loginBtn.textContent = user.user_metadata.full_name;
     window.location.href = "/members/";
   });
 });
