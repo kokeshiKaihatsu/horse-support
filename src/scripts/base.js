@@ -7,16 +7,14 @@ document.addEventListener("DOMContentLoaded", () => {
   function updateUI() {
     const user = netlifyIdentity.currentUser();
 
+     userBtn.href = "/login/";
     // ユーザーボタン
     if (userBtn) {
       if (user) {
         userBtn.textContent =
           user.user_metadata?.full_name || user.email;
-
-        userBtn.href = "/members/";
       } else {
         userBtn.textContent = "ログイン";
-        userBtn.href = "/login/";
       }
     }
 
