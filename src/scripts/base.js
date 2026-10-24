@@ -1,23 +1,36 @@
 document.addEventListener("DOMContentLoaded", () => {
+  if (typeof netlifyIdentity === "undefined") return;
+
   const adminLink = document.getElementById("adminLink");
+  const userBtn = document.getElementById("userBtn");
 
-  if (!adminLink) return;
+  function updateUI() {
+    const user = netlifyIdentity.currentUser();
 
-  adminLink.style.display = "none";
+    // ユーザーボタン
+    if (userBtn) {
+      if (user) {
+        userBtn.textContent =
+          user.user_metadata?.full_name || user.email;
 
-  const user = netlifyIdentity.currentUser();
+        userBtn.href = "/members/";
+      } else {
+        userBtn.textContent = "ログイン";
+        userBtn.href = "/login/";
+      }
+    }
 
-  if (user && user.role === "admin") {
-    adminLink.style.display = "inline-block";
+    // 管理リンク
+    if (adminLink) {
+      adminLink.style.display =
+        user && user.role === "admin"
+          ? "inline-block"
+          : "none";
+    }
   }
 
-  netlifyIdentity.on("login", (user) => {
-    if (user.role === "admin") {
-      adminLink.style.display = "inline-block";
-    }
-  });
+  updateUI();
 
-  netlifyIdentity.on("logout", () => {
-    adminLink.style.display = "none";
-  });
+  netlifyIdentity.on("login", updateUI);
+  netlifyIdentity.on("logout", updateUI);
 });

@@ -19,16 +19,13 @@
       <div class="logo">
         <a href="/">ホームに戻る</a>
 
-        {# 管理者リンク（今は常に表示） #}
-        <a href="/admin/" class="admin-link">管理</a>
+        <a href="/admin/" class="admin-link" id="adminLink">管理</a>
       </div>
 
       <nav class="nav-right">
-        {% if user %}
-          <span class="user-name">{{ user.name }} さん</span>
-        {% else %}
-          <a href="/login/" class="login-btn">ログイン</a>
-        {% endif %}
+        <a href="/login/" class="login-btn" id="userBtn">
+          ログイン
+        </a>
       </nav>
     </header>
 
