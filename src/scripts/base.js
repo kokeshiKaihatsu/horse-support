@@ -22,10 +22,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 管理リンク
     if (adminLink) {
-      adminLink.style.display =
-        user && user.role === "admin"
-          ? "inline-block"
-          : "none";
+    adminLink.style.display =
+        user?.app_metadata?.roles?.includes("admin")
+        ? "inline-block"
+        : "none";
     }
   }
 
