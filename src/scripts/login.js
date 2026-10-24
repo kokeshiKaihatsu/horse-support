@@ -13,12 +13,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   updateButton();
 
-  loginBtn.addEventListener("click", () => {
+  loginBtn.addEventListener("click", async () => {
     const user = netlifyIdentity.currentUser();
 
     if (user) {
-      netlifyIdentity.logout();
-      window.location.href = "/";
+      await netlifyIdentity.logout();
+      updateButton();
     } else {
       netlifyIdentity.open("login");
     }
