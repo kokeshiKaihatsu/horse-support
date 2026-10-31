@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="ja">
-<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
 
 <head>
   <meta charset="UTF-8">
   <title>支援者限定タイムライン</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
 
   <!-- 共通CSS -->
   <link rel="stylesheet" href="/styles.css">
@@ -19,14 +20,20 @@
       <div class="logo">
         <a href="/">ホームに戻る</a>
 
-        
-        <a href="/admin/" class="admin-link">管理</a>
+        <a
+          href="/admin/"
+          class="admin-link"
+          id="adminLink"
+          style="display:none;"
+        >
+          管理
+        </a>
       </div>
 
       <nav class="nav-right">
-        
-          <a href="/login/" class="login-btn">ログイン</a>
-        
+        <a href="/login/" class="login-btn" id="userBtn">
+          ログイン
+        </a>
       </nav>
     </header>
 
@@ -45,6 +52,10 @@
     <option value="">すべて</option>
 
     
+      <option value="hime">ヒメ</option>
+    
+      <option value="kokeshi">ﾃﾞｰｽｹ</option>
+    
   </select>
 </form>
 
@@ -55,10 +66,21 @@
     
     
     
+      
+        
+      
+    
+      
+    
 
     <article class="timeline-item" data-horse="hime">
 
       <!-- 馬アイコン＋名前 -->
+      
+      <div class="horse-header">
+        <img src="/images/horses/hime.jpg" alt="ヒメ" class="horse-icon">
+        <span class="horse-name">ヒメ</span>
+      </div>
       
 
       <h2>今日のひめちゃん</h2>
@@ -92,10 +114,21 @@
     
     
     
+      
+        
+      
+    
+      
+    
 
     <article class="timeline-item" data-horse="hime">
 
       <!-- 馬アイコン＋名前 -->
+      
+      <div class="horse-header">
+        <img src="/images/horses/hime.jpg" alt="ヒメ" class="horse-icon">
+        <span class="horse-name">ヒメ</span>
+      </div>
       
 
       <h2>今日のひめちゃん</h2>
@@ -145,6 +178,10 @@
     <footer>
       <p>ひめちゃんの支援クラブ</p>
     </footer>
+
+    <!-- js呼び出し -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script src="/scripts/base.js"></script>
 
   </body>
 </html>

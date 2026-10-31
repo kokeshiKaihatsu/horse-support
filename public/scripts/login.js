@@ -3,11 +3,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!loginBtn) return;
 
-  loginBtn.addEventListener("click", () => {
-    netlifyIdentity.open("login");
+  function updateButton() {
+    const user = netlifyIdentity.currentUser();
+
+    loginBtn.textContent = user
+      ? "ログアウト"
+      : "ログイン";
+  }
+
+  updateButton();
+
+  loginBtn.addEventListener("click", async () => {
+    const user = netlifyIdentity.currentUser();
+
+    if (user) {
+      await netlifyIdentity.logout();
+      updateButton();
+    } else {
+      netlifyIdentity.open("login");
+    }
   });
 
   netlifyIdentity.on("login", () => {
+    updateButton();
     window.location.href = "/members/";
+  });
+
+  netlifyIdentity.on("logout", () => {
+    updateButton();
   });
 });

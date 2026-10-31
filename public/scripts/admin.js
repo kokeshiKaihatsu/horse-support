@@ -286,7 +286,7 @@ async function saveTextFile(path, content) {
     },
     body: JSON.stringify({
       message: `Add ${path}`,
-      content: btoa(content),
+      content: btoa(unescape(encodeURIComponent(content))),
       encoding: "utf-8"
     })
   });
