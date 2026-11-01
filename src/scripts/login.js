@@ -26,7 +26,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   netlifyIdentity.on("login", () => {
     updateButton();
-    window.location.href = "/members/";
+    // トップページに自動繊維
+    window.location.href = "/index.html";
   });
 
   netlifyIdentity.on("logout", () => {

@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // ログイン・ログアウト時も更新
     netlifyIdentity.on("login", user => {
       updateAdminUI();
-      document.location.href = "/admin/";
     });
 
     netlifyIdentity.on("logout", () => {

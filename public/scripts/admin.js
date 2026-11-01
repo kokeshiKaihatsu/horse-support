@@ -1,17 +1,36 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+  // 管理者権限用
   if (window.netlifyIdentity) {
-  window.netlifyIdentity.on('init', user => {
-    if (!user) {
-      window.netlifyIdentity.on('login', () => {
-        document.location.href = '/admin/';
+
+    function updateAdminUI() {
+      const user = netlifyIdentity.currentUser();
+
+      const isAdmin =
+        user?.app_metadata?.roles?.includes("admin");
+
+      document.querySelectorAll(".edit-btn").forEach(btn => {
+        btn.style.display = isAdmin ? "" : "none";
       });
     }
-  });
 
-  // 🔥 これがないと Invalid state key が出る
-  window.netlifyIdentity.on('error', err => console.error('Identity error:', err));
-}
+    // 初回実行
+    updateAdminUI();
+
+    // ログイン・ログアウト時も更新
+    netlifyIdentity.on("login", user => {
+      updateAdminUI();
+    });
+
+    netlifyIdentity.on("logout", () => {
+      updateAdminUI();
+    });
+
+    // エラー表示
+    netlifyIdentity.on("error", err => {
+      console.error("Identity error:", err);
+    });
+  }
 
   // ============================
   // 🐴 馬追加（画像1枚）
