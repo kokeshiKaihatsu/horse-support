@@ -273,7 +273,41 @@ document.querySelectorAll(".save-btn").forEach(btn => {
       return;
     }
 
-    alert("削除処理を開始");
+    const user = netlifyIdentity.currentUser();
+    const token = await user.jwt();
+
+    const path = `src/horses/${id}.md`;
+
+    // ファイル情報取得
+    const fileRes = await fetch(
+      `/.netlify/git/github/contents/${path}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+
+    const fileData = await fileRes.json();
+
+    // 削除
+    await fetch(
+      `/.netlify/git/github/contents/${path}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          message: `Delete ${path}`,
+          sha: fileData.sha
+        })
+      }
+    );
+
+    alert("削除しました！");
+    location.reload();
 
     });
   });
