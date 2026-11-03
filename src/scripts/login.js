@@ -20,17 +20,19 @@ document.addEventListener("DOMContentLoaded", () => {
       await netlifyIdentity.logout();
       updateButton();
     } else {
+      // 「自分でログインボタンを押した」印を付ける
+      sessionStorage.setItem("justLoggedIn", "true");
       netlifyIdentity.open("login");
     }
   });
 
   netlifyIdentity.on("login", () => {
     updateButton();
-    // トップページに自動繊維
-    window.location.href = "/index.html";
-  });
 
-  netlifyIdentity.on("logout", () => {
-    updateButton();
+    // ログイン直後だけトップへ飛ばす
+    if (sessionStorage.getItem("justLoggedIn")) {
+      sessionStorage.removeItem("justLoggedIn");
+      window.location.href = "/";
+    }
   });
 });

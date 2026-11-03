@@ -87,4 +87,48 @@
   transform: scale(1.1);
 }
 
+/* ==========================
+   編集モード
+========================== */
 
+.edit-mode {
+  text-align: left;
+}
+
+.edit-mode label {
+  display: block;
+  font-weight: bold;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+.edit-mode input[type="text"],
+.edit-mode input[type="file"],
+.edit-mode textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px;
+  font-size: 14px;
+}
+
+.edit-mode textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.button-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.button-row button {
+  width: auto;
+  padding: 6px 14px;
+}
+
+.delete-btn {
+  background: #c44;
+  color: white;
+}

@@ -39,8 +39,11 @@ title: 馬一覧
         <label>特徴</label>
         <textarea class="edit-desc">{{ horse.data.description }}</textarea>
 
-        <button class="save-btn">保存</button>
-        <button class="cancel-btn">キャンセル</button>
+        <div class="button-row">
+          <button class="save-btn">保存</button>
+          <button class="delete-btn">削除</button>
+          <button class="cancel-btn">キャンセル</button>
+        </div>
       </div>
     </div>
   {% endfor %}

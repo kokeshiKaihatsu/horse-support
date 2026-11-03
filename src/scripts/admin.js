@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
         user?.app_metadata?.roles?.includes("admin");
 
       document.querySelectorAll(".edit-btn").forEach(btn => {
-        btn.style.display = isAdmin ? "" : "none";
+        btn.style.display = isAdmin ? "flex" : "none";
       });
     }
 
@@ -224,7 +224,7 @@ description: ${desc}
 `;
 
     // ============================
-    // 🟥 ローカル保存（本当に md を上書き）
+    // 🟥 ローカル保存（md を上書き）
     // ============================
     if (location.hostname === "localhost") {
 
@@ -279,21 +279,6 @@ function fileToBase64(file) {
 // ============================
 // 🔧 テキスト保存（ローカル or 本番）
 // ============================
-async function saveTextFile(path, content) {
-
-  if (location.hostname === "localhost") {
-    const blob = new Blob([content], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = path.split("/").pop();
-    a.click();
-
-    URL.revokeObjectURL(url);
-    return;
-  }
-
   const user = netlifyIdentity.currentUser();
   const token = await user.jwt();
 
@@ -309,7 +294,6 @@ async function saveTextFile(path, content) {
       encoding: "utf-8"
     })
   });
-}
 
 
 // ============================
@@ -351,4 +335,20 @@ async function saveImageFile(path, base64Data) {
       encoding: "base64"
     })
   });
+
+  // 削除ボタン処理
+  document.querySelectorAll(".delete-btn").forEach(btn => {
+  btn.addEventListener("click", async () => {
+
+    const card = btn.closest(".horse-card");
+    const id = card.dataset.id;
+
+    if (!confirm(`「${id}」を削除しますか？`)) {
+      return;
+    }
+
+    alert("削除処理を開始");
+
+  });
+});
 }

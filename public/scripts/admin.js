@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
         user?.app_metadata?.roles?.includes("admin");
 
       document.querySelectorAll(".edit-btn").forEach(btn => {
-        btn.style.display = isAdmin ? "" : "none";
+        btn.style.display = isAdmin ? "flex" : "none";
       });
     }
 
@@ -224,7 +224,7 @@ description: ${desc}
 `;
 
     // ============================
-    // 🟥 ローカル保存（本当に md を上書き）
+    // 🟥 ローカル保存（md を上書き）
     // ============================
     if (location.hostname === "localhost") {
 
