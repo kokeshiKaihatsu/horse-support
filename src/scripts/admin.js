@@ -42,6 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const id = document.getElementById("horseId").value;
       const name = document.getElementById("horseName").value;
+      const birthday = document.getElementById("horseBirthday").value;
       const desc = document.getElementById("horseDesc").value;
 
       const file = document.getElementById("horseImage").files[0];
@@ -61,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const content = `---
 id: ${id}
 name: ${name}
-image: ${imagePathMarkdown}
+image: ${markdownImagePath}
 birthday: ${birthday}
 description: ${desc}
 ---
@@ -217,13 +218,13 @@ document.querySelectorAll(".save-btn").forEach(btn => {
 
     // md の内容（インデント無し）
     const content = `---
-      id: ${id}
-      name: ${name}
-      image: ${imagePathMarkdown}
-      birthday: ${birthday}
-      description: ${desc}
-      ---
-      `;
+id: ${id}
+name: ${name}
+image: ${imagePathMarkdown}
+birthday: ${birthday}
+description: ${desc}
+---
+`;
 
     // ============================
     // 🟥 ローカル保存（md を上書き）
@@ -255,64 +256,33 @@ document.querySelectorAll(".save-btn").forEach(btn => {
     // ============================
     // 🟩 本番保存（GitHub API）
     // ============================
-    await saveTextFile(`src/horses/${id}.md`, content);
+    const path = `src/horses/${id}.md`;
+
+    await updateTextFile(path, content);
 
     alert("保存しました！");
     location.reload();
-  });
+      });
 });
 
   // 削除ボタン処理
   document.querySelectorAll(".delete-btn").forEach(btn => {
-  btn.addEventListener("click", async () => {
+    btn.addEventListener("click", async () => {
 
-    const card = btn.closest(".horse-card");
-    const id = card.dataset.id;
+      const card = btn.closest(".horse-card");
+      const id = card.dataset.id;
 
-    if (!confirm(`「${id}」を削除しますか？`)) {
-      return;
-    }
-
-    const user = netlifyIdentity.currentUser();
-    const token = await user.jwt();
-
-    const path = `src/horses/${id}.md`;
-
-    // ファイル情報取得
-    const fileRes = await fetch(
-      `/.netlify/git/github/contents/${path}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
+      if (!confirm(`「${id}」を削除しますか？`)) {
+        return;
       }
-    );
 
-    const fileData = await fileRes.json();
+      await deleteTextFile(`src/horses/${id}.md`);
 
-    // 削除
-    await fetch(
-      `/.netlify/git/github/contents/${path}`,
-      {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          message: `Delete ${path}`,
-          sha: fileData.sha
-        })
-      }
-    );
-
-    alert("削除しました！");
-    location.reload();
-
+      alert("削除しました！");
+      location.reload();
     });
   });
 });
-
 
 // ============================
 // 🔧 Base64変換
@@ -328,10 +298,7 @@ function fileToBase64(file) {
 
 
 // ============================
-// 🔧 テキスト保存（ローカル or 本番）
-// ============================
-// ============================
-// 🔧 テキスト保存（ローカル or 本番）
+// 🔧 テキスト保存（新規）
 // ============================
 
 async function saveTextFile(path, content) {
@@ -365,7 +332,76 @@ async function saveTextFile(path, content) {
     })
   });
 }
+// ============================
+// 🔧 テキスト保存（更新）
+// ============================
+async function updateTextFile(path, content) {
 
+  const user = netlifyIdentity.currentUser();
+  const token = await user.jwt();
+
+  const fileRes = await fetch(
+    `/.netlify/git/github/contents/${path}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+
+  const fileData = await fileRes.json();
+
+  await fetch(
+    `/.netlify/git/github/contents/${path}`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        message: `Update ${path}`,
+        content: btoa(unescape(encodeURIComponent(content))),
+        sha: fileData.sha
+      })
+    }
+  );
+}
+// ============================
+// 🔧 削除メソッド
+// ============================
+async function deleteTextFile(path) {
+
+  // TODO 画像を削除 
+  const user = netlifyIdentity.currentUser();
+  const token = await user.jwt();
+
+  const fileRes = await fetch(
+    `/.netlify/git/github/contents/${path}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+
+  const fileData = await fileRes.json();
+
+  await fetch(
+    `/.netlify/git/github/contents/${path}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        message: `Delete ${path}`,
+        sha: fileData.sha
+      })
+    }
+  );
+}
 
 // ============================
 // 🔧 画像保存（ローカル or 本番）

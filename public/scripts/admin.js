@@ -57,10 +57,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       await saveImageFile(imagePath, base64);
 
+      // インデントをご解釈するからインデント禁止
       const content = `---
 id: ${id}
 name: ${name}
-image: ${markdownImagePath}
+image: ${imagePathMarkdown}
+birthday: ${birthday}
 description: ${desc}
 ---
 `;
@@ -253,15 +255,33 @@ description: ${desc}
     // ============================
     // 🟩 本番保存（GitHub API）
     // ============================
-    await saveTextFile(`src/horses/${id}.md`, content);
+    const path = `src/horses/${id}.md`;
+
+    await updateTextFile(path, content);
 
     alert("保存しました！");
     location.reload();
+      });
+});
+
+  // 削除ボタン処理
+  document.querySelectorAll(".delete-btn").forEach(btn => {
+    btn.addEventListener("click", async () => {
+
+      const card = btn.closest(".horse-card");
+      const id = card.dataset.id;
+
+      if (!confirm(`「${id}」を削除しますか？`)) {
+        return;
+      }
+
+      await deleteTextFile(`src/horses/${id}.md`);
+
+      alert("削除しました！");
+      location.reload();
+    });
   });
 });
-
-});
-
 
 // ============================
 // 🔧 Base64変換
@@ -277,8 +297,24 @@ function fileToBase64(file) {
 
 
 // ============================
-// 🔧 テキスト保存（ローカル or 本番）
+// 🔧 テキスト保存（新規）
 // ============================
+
+async function saveTextFile(path, content) {
+
+  if (location.hostname === "localhost") {
+    const blob = new Blob([content], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = path.split("/").pop();
+    a.click();
+
+    URL.revokeObjectURL(url);
+    return;
+  }
+
   const user = netlifyIdentity.currentUser();
   const token = await user.jwt();
 
@@ -294,7 +330,76 @@ function fileToBase64(file) {
       encoding: "utf-8"
     })
   });
+}
+// ============================
+// 🔧 テキスト保存（更新）
+// ============================
+async function updateTextFile(path, content) {
 
+  const user = netlifyIdentity.currentUser();
+  const token = await user.jwt();
+
+  const fileRes = await fetch(
+    `/.netlify/git/github/contents/${path}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+
+  const fileData = await fileRes.json();
+
+  await fetch(
+    `/.netlify/git/github/contents/${path}`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        message: `Update ${path}`,
+        content: btoa(unescape(encodeURIComponent(content))),
+        sha: fileData.sha
+      })
+    }
+  );
+}
+// ============================
+// 🔧 削除メソッド
+// ============================
+async function deleteTextFile(path) {
+
+  const user = netlifyIdentity.currentUser();
+  const token = await user.jwt();
+
+  const fileRes = await fetch(
+    `/.netlify/git/github/contents/${path}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+
+  const fileData = await fileRes.json();
+
+  await fetch(
+    `/.netlify/git/github/contents/${path}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        message: `Delete ${path}`,
+        sha: fileData.sha
+      })
+    }
+  );
+}
 
 // ============================
 // 🔧 画像保存（ローカル or 本番）
@@ -335,20 +440,4 @@ async function saveImageFile(path, base64Data) {
       encoding: "base64"
     })
   });
-
-  // 削除ボタン処理
-  document.querySelectorAll(".delete-btn").forEach(btn => {
-  btn.addEventListener("click", async () => {
-
-    const card = btn.closest(".horse-card");
-    const id = card.dataset.id;
-
-    if (!confirm(`「${id}」を削除しますか？`)) {
-      return;
-    }
-
-    alert("削除処理を開始");
-
-  });
-});
 }
