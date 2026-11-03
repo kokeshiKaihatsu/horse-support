@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
         user?.app_metadata?.roles?.includes("admin");
 
       document.querySelectorAll(".edit-btn").forEach(btn => {
-        btn.style.display = isAdmin ? "flex" : "none";
+        btn.style.display = isAdmin ? "" : "none";
       });
     }
 

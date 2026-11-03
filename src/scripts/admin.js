@@ -57,10 +57,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       await saveImageFile(imagePath, base64);
 
+      // インデントをご解釈するからインデント禁止
       const content = `---
 id: ${id}
 name: ${name}
-image: ${markdownImagePath}
+image: ${imagePathMarkdown}
+birthday: ${birthday}
 description: ${desc}
 ---
 `;
@@ -215,13 +217,13 @@ document.querySelectorAll(".save-btn").forEach(btn => {
 
     // md の内容（インデント無し）
     const content = `---
-id: ${id}
-name: ${name}
-image: ${imagePathMarkdown}
-birthday: ${birthday}
-description: ${desc}
----
-`;
+      id: ${id}
+      name: ${name}
+      image: ${imagePathMarkdown}
+      birthday: ${birthday}
+      description: ${desc}
+      ---
+      `;
 
     // ============================
     // 🟥 ローカル保存（md を上書き）
@@ -260,6 +262,21 @@ description: ${desc}
   });
 });
 
+  // 削除ボタン処理
+  document.querySelectorAll(".delete-btn").forEach(btn => {
+  btn.addEventListener("click", async () => {
+
+    const card = btn.closest(".horse-card");
+    const id = card.dataset.id;
+
+    if (!confirm(`「${id}」を削除しますか？`)) {
+      return;
+    }
+
+    alert("削除処理を開始");
+
+    });
+  });
 });
 
 
@@ -279,6 +296,25 @@ function fileToBase64(file) {
 // ============================
 // 🔧 テキスト保存（ローカル or 本番）
 // ============================
+// ============================
+// 🔧 テキスト保存（ローカル or 本番）
+// ============================
+
+async function saveTextFile(path, content) {
+
+  if (location.hostname === "localhost") {
+    const blob = new Blob([content], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = path.split("/").pop();
+    a.click();
+
+    URL.revokeObjectURL(url);
+    return;
+  }
+
   const user = netlifyIdentity.currentUser();
   const token = await user.jwt();
 
@@ -294,6 +330,7 @@ function fileToBase64(file) {
       encoding: "utf-8"
     })
   });
+}
 
 
 // ============================
@@ -335,20 +372,4 @@ async function saveImageFile(path, base64Data) {
       encoding: "base64"
     })
   });
-
-  // 削除ボタン処理
-  document.querySelectorAll(".delete-btn").forEach(btn => {
-  btn.addEventListener("click", async () => {
-
-    const card = btn.closest(".horse-card");
-    const id = card.dataset.id;
-
-    if (!confirm(`「${id}」を削除しますか？`)) {
-      return;
-    }
-
-    alert("削除処理を開始");
-
-  });
-});
 }
