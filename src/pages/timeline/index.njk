@@ -11,7 +11,15 @@ permalink: "/timeline/index.html"
 {% endblock %}
 
 {% for post in collections.posts | sort(true) %}
-  <article class="timeline-item">
+  <article class="timeline-item"
+           data-file="{{ post.inputPath }}">
+
+    <button class="delete-post-btn edit-btn"
+            data-file="{{ post.inputPath }}"
+            style="display:none;">
+      🗑️
+    </button>
+
     <h2>{{ post.data.title }}</h2>
 
     <p class="date">{{ post.date | date("yyyy/MM/dd") }}</p>
@@ -34,3 +42,5 @@ permalink: "/timeline/index.html"
   <span class="close">&times;</span>
   <img class="modal-content" id="modalImg">
 </div>
+
+<script src="/scripts/admin.js"></script>

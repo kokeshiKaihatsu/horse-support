@@ -64,7 +64,8 @@ id: ${id}
 name: ${name}
 image: ${markdownImagePath}
 birthday: ${birthday}
-description: ${desc}
+description: |
+  ${desc.replace(/\n/g, "\n  ")}
 ---
 `;
 
@@ -222,7 +223,8 @@ id: ${id}
 name: ${name}
 image: ${imagePathMarkdown}
 birthday: ${birthday}
-description: ${desc}
+description: |
+  ${desc.replace(/\n/g, "\n  ")}
 ---
 `;
 
@@ -265,7 +267,24 @@ description: ${desc}
       });
 });
 
-  // 削除ボタン処理
+  // 投稿削除
+  document.querySelectorAll(".delete-post-btn").forEach(btn => {
+    btn.addEventListener("click", async () => {
+
+      const file = btn.dataset.file;
+
+      if (!confirm("この投稿を削除しますか？")) {
+        return;
+      }
+
+      await deleteTextFile(file);
+
+      alert("削除しました！");
+      location.reload();
+    });
+  });
+
+  // 馬の削除ボタン処理
   document.querySelectorAll(".delete-btn").forEach(btn => {
     btn.addEventListener("click", async () => {
 

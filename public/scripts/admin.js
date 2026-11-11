@@ -42,6 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const id = document.getElementById("horseId").value;
       const name = document.getElementById("horseName").value;
+      const birthday = document.getElementById("horseBirthday").value;
       const desc = document.getElementById("horseDesc").value;
 
       const file = document.getElementById("horseImage").files[0];
@@ -61,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const content = `---
 id: ${id}
 name: ${name}
-image: ${imagePathMarkdown}
+image: ${markdownImagePath}
 birthday: ${birthday}
 description: ${desc}
 ---
@@ -371,6 +372,7 @@ async function updateTextFile(path, content) {
 // ============================
 async function deleteTextFile(path) {
 
+  // TODO 画像を削除 
   const user = netlifyIdentity.currentUser();
   const token = await user.jwt();
 
