@@ -119,7 +119,7 @@ ${imagesYaml}
 ${body}
 `;
 
-      await saveTextFile(`src/posts/${mdFilename}`, content);
+      await saveTextFile(`src/timeline/${mdFilename}`, content);
 
       alert("投稿を追加しました！");
     });

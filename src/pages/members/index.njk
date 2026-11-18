@@ -36,6 +36,12 @@ permalink: "/members/index.html"
 
     <article class="timeline-item" data-horse="{{ post.data.horse_id }}">
 
+      <button class="delete-post-btn edit-btn"
+              data-file="{{ post.inputPath }}"
+              style="display:none;">
+        🗑️
+      </button>
+      
       <!-- 馬アイコン＋名前 -->
       {% if horse %}
       <div class="horse-header">
@@ -81,3 +87,4 @@ permalink: "/members/index.html"
 </div>
 
 <script src="/scripts/members.js"></script>
+<script src="/scripts/admin.js"></script>
