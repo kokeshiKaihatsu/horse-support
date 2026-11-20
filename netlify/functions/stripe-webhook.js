@@ -27,24 +27,31 @@ exports.handler = async (event) => {
     const invoiceId = invoice.id;
 
     // members更新
-    await supabase
-      .from("members")
-      .upsert({
+    const memberResult = await supabase
+    .from("members")
+    .upsert({
         email,
         stripe_customer_id: customerId,
         stripe_subscription_id: subscriptionId,
         quantity
-      });
+    });
 
-    // payment_history追加
-    await supabase
-      .from("payment_history")
-      .insert({
+    console.log("MEMBER RESULT");
+    console.log(JSON.stringify(memberResult, null, 2));
+
+    const historyResult = await supabase
+    .from("payment_history")
+    .insert({
         email,
         amount,
         quantity,
         invoice_id: invoiceId
-      });
+    });
+
+console.log("HISTORY RESULT");
+console.log(JSON.stringify(historyResult, null, 2));
+
+console.log("Saved:", email);
 
     console.log("Saved:", email);
   }
